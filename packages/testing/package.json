@@ -1,0 +1,24 @@
+{
+  "name": "@nomad-coin/testing",
+  "version": "1.0.0",
+  "description": "Testing utilities and infrastructure for Nomad Coin",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "test:contracts": "cd ../contracts && npm run test",
+    "test:web-app": "cd ../web-app && npm run test",
+    "test:e2e": "playwright test",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "format": "prettier --write src"
+  },
+  "dependencies": {
+    "vitest": "^0.34.0",
+    "@playwright/test": "^1.37.0",
+    "hardhat": "^2.17.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.0",
+    "@types/node": "^20.0.0"
+  }
+}

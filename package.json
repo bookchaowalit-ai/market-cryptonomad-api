@@ -1,0 +1,34 @@
+{
+  "name": "nomad-coin-monorepo",
+  "version": "1.0.0",
+  "description": "Nomad Coin ERC-20 token ecosystem monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "dev": "turbo run dev --parallel",
+    "clean": "turbo run clean",
+    "deploy:local": "turbo run deploy --filter=deployment",
+    "deploy:testnet": "turbo run deploy:testnet --filter=deployment",
+    "deploy:mainnet": "turbo run deploy:mainnet --filter=deployment"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

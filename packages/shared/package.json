@@ -1,0 +1,23 @@
+{
+  "name": "@nomad-coin/shared",
+  "version": "1.0.0",
+  "description": "Shared types and utilities for Nomad Coin",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "format": "prettier --write src",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "viem": "^1.10.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.0",
+    "vitest": "^0.34.0",
+    "@types/node": "^20.0.0"
+  }
+}
