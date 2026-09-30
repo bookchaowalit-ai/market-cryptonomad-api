@@ -1,4 +1,4 @@
-import { isAddress, formatEther, parseEther, formatUnits, parseUnits } from 'viem';
+import { getAddress, isAddress, formatEther, parseEther, formatUnits, parseUnits } from 'viem';
 import { TOKEN_CONSTANTS, ERROR_MESSAGES } from './constants';
 // Address validation and formatting utilities
 export const addressUtils = {
@@ -23,7 +23,7 @@ export const addressUtils = {
         if (!isAddress(address)) {
             throw new Error(ERROR_MESSAGES.INVALID_ADDRESS);
         }
-        return address;
+        return getAddress(address);
     },
     /**
      * Compares two addresses for equality (case-insensitive)

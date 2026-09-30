@@ -1,4 +1,4 @@
-import { Address, isAddress, formatEther, parseEther, formatUnits, parseUnits } from 'viem';
+import { Address, getAddress, isAddress, formatEther, parseEther, formatUnits, parseUnits } from 'viem';
 import { NetworkConfig, TokenInfo, Transaction } from './types';
 import { TOKEN_CONSTANTS, ERROR_MESSAGES } from './constants';
 
@@ -26,7 +26,7 @@ export const addressUtils = {
     if (!isAddress(address)) {
       throw new Error(ERROR_MESSAGES.INVALID_ADDRESS);
     }
-    return address;
+    return getAddress(address);
   },
 
   /**
