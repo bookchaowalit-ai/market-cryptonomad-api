@@ -13,9 +13,9 @@
     "format": "turbo run format",
     "dev": "turbo run dev --parallel",
     "clean": "turbo run clean",
-    "deploy:local": "turbo run deploy --filter=deployment",
-    "deploy:testnet": "turbo run deploy:testnet --filter=deployment",
-    "deploy:mainnet": "turbo run deploy:mainnet --filter=deployment"
+    "deploy:local": "npm run deploy --workspace @nomad-coin/contracts",
+    "deploy:testnet": "npm run deploy:testnet --workspace @nomad-coin/contracts",
+    "deploy:mainnet": "npm run deploy:mainnet --workspace @nomad-coin/contracts"
   },
   "devDependencies": {
     "turbo": "^1.10.0",

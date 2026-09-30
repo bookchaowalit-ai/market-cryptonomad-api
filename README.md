@@ -1,8 +1,8 @@
 # Nomad Coin
 
 An npm-workspaces monorepo for an ERC-20 token: a genuinely well-architected
-upgradeable smart contract, a Next.js wallet-connect frontend, and scaffolding
-for shared types, deployment, and cross-package testing.
+upgradeable smart contract, a Next.js wallet-connect frontend, and shared
+types/utilities.
 
 ## Packages
 
@@ -11,8 +11,12 @@ for shared types, deployment, and cross-package testing.
 | `packages/contracts` | Real | `NomadCoin.sol` — a UUPS-upgradeable ERC-20 (OpenZeppelin Upgradeable) with role-based minting/pausing, a blacklist, a hard max-supply cap, and custom errors. Compiles cleanly (27 files via Hardhat). |
 | `packages/web-app` | Real | Next.js 14 + wagmi/viem/RainbowKit wallet-connect UI. Builds and serves cleanly. |
 | `packages/shared` | Real | Shared TypeScript types/utils/constants (`viem`-based), typechecks clean. |
-| `packages/testing` | **Stub only** | `src/index.ts` is a single placeholder comment. Real tests live next to their code: `packages/contracts/test` (Hardhat) and `packages/shared/src/*.test.ts` (Vitest). |
-| `packages/deployment` | **Stub only** | Same pattern: `src/index.ts` is a placeholder comment, but `package.json` declares `deploy`, `deploy:testnet`, `deploy:mainnet`, `verify`, `setup-roles`, `upgrade` scripts pointing at `dist/deploy.js`, `dist/verify.js`, etc. — files that a build of the current source would never produce. None of these scripts are runnable as the repo stands. |
+
+Deployment lives in `packages/contracts/scripts/deploy.ts` (root
+`npm run deploy:local|deploy:testnet|deploy:mainnet` delegate to it). The
+former `packages/deployment` and `packages/testing` stubs, whose scripts
+pointed at files that never existed, were removed; tests live next to their
+code (`packages/contracts/test`, `packages/*/src/**/*.test.ts`).
 
 ## Notes from a recent audit pass
 
@@ -52,9 +56,10 @@ npm run test         # turbo run test
 Checks that CI runs (`.github/workflows/ci.yml`):
 
 ```bash
+cd packages/contracts && npx solhint --max-warnings 0 'contracts/**/*.sol'
 cd packages/contracts && npx hardhat test   # NomadCoin unit tests (roles, cap, pause, blacklist, UUPS)
 cd packages/shared && npx tsc --noEmit -p . && npx vitest run
-cd packages/web-app && npm run lint && npx tsc --noEmit -p .
+cd packages/web-app && npm run lint && npx tsc --noEmit -p . && npx vitest run
 ```
 
 `hardhat compile` downloads solc 0.8.20 from binaries.soliditylang.org on the first run.
