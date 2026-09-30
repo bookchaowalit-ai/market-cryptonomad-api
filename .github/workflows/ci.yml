@@ -23,6 +23,10 @@ jobs:
       - name: Install workspace dependencies
         run: npm ci
 
+      - name: Contracts - solhint
+        working-directory: packages/contracts
+        run: npx solhint --max-warnings 0 'contracts/**/*.sol'
+
       - name: Contracts - compile and test (in-process Hardhat network)
         working-directory: packages/contracts
         run: npx hardhat test
@@ -33,8 +37,9 @@ jobs:
           npx tsc --noEmit -p .
           npx vitest run
 
-      - name: Web app - lint and typecheck
+      - name: Web app - lint, typecheck and unit tests
         working-directory: packages/web-app
         run: |
           npm run lint
           npx tsc --noEmit -p .
+          npx vitest run
