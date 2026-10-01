@@ -21,11 +21,14 @@ CI.
   previous implementation) once a V2 exists.
 
 ### P1
-- Wire `TransferForm`/`TokenBalance` to the real contract (wagmi
-  `useContractWrite`/`useContractRead` with the ABI from Hardhat
+- Wire `TransferForm`/`TokenBalance` to the real contract (wagmi v2
+  `useWriteContract`/`useReadContract` with the ABI from Hardhat
   artifacts); pass the on-chain balance into `validateTransfer`.
-- Remaining `npm audit` items need Next 15 and the wagmi v2 majors (see
-  README).
+- `npm audit --omit=dev` is down to 22 moderates, all inside the
+  WalletConnect/Reown/MetaMask SDK tree under `@wagmi/connectors` (no fix
+  in wagmi 2.x). Dev-only highs/critical remain (vitest 0.34 -> 3.x, the
+  @typescript-eslint v6 / eslint 8 chain, hardhat 2 transitive): bump
+  vitest and the lint toolchain in a separate pass.
 
 ### P2
 - Component test for `TransferForm` rendering (needs jsdom +
@@ -51,6 +54,7 @@ CI.
   text/decimal input instead of `type=number step=0.0001`.
 - Verified: 19 Hardhat tests (compiled offline via npm solcjs 0.8.20),
   shared 8 tests, web-app lint/typecheck/16 tests, solhint clean.
+- Security deps (web-app): `next` 14.2.35 -> 15.5.27 (no patched 14.x for critical GHSA-2xp9-vwfh-vxw4) with React 19; wagmi 1 -> 2.19, viem 1 -> 2.57 (also in `shared`), RainbowKit 1 -> 2.2, TanStack Query 4 -> 5 together. `providers.tsx` moved to `getDefaultConfig` + `WagmiProvider` (Alchemy transport only when `NEXT_PUBLIC_ALCHEMY_API_KEY` is set, public RPC fallback); `next.config.js` drops `swcMinify` and aliases optional wallet-SDK peers (`@x402/*`, React Native async-storage) to `false`. Root overrides pin `postcss` ^8.5.28 and `ws@^8` ^8.22.0; lockfile regenerated. `npm audit --omit=dev`: C1/H9/M14 -> C0/H0/M22. Verified: hardhat test 19 passing (offline solcjs), solhint, shared tsc + vitest 8, web-app lint/tsc/vitest 16/next build.
 
 ## Done in pass 1
 - Added 19 Hardhat tests for NomadCoin: init and lock, roles, max-supply

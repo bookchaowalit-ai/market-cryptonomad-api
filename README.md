@@ -9,7 +9,7 @@ types/utilities.
 | Package | Status | What it is |
 |---|---|---|
 | `packages/contracts` | Real | `NomadCoin.sol` — a UUPS-upgradeable ERC-20 (OpenZeppelin Upgradeable) with role-based minting/pausing, a blacklist, a hard max-supply cap, and custom errors. Compiles cleanly (27 files via Hardhat). |
-| `packages/web-app` | Real | Next.js 14 + wagmi/viem/RainbowKit wallet-connect UI. Builds and serves cleanly. |
+| `packages/web-app` | Real | Next.js 15 / React 19 + wagmi 2 / viem 2 / RainbowKit 2 wallet-connect UI. Builds and serves cleanly. |
 | `packages/shared` | Real | Shared TypeScript types/utils/constants (`viem`-based), typechecks clean. |
 
 Deployment lives in `packages/contracts/scripts/deploy.ts` (root
@@ -43,6 +43,9 @@ code (`packages/contracts/test`, `packages/*/src/**/*.test.ts`).
   dependency conflict (`ethers` v5 vs the `^6.4.0` `hardhat-toolbox@3.0.0`
   wants) — not forced, since `--legacy-peer-deps`/`--force` risks quietly
   breaking the Hardhat toolchain that was just verified working.
+  (Superseded: `web-app` is now on Next 15.5, React 19, wagmi 2, viem 2,
+  RainbowKit 2 and TanStack Query 5; `npm audit --omit=dev` has no high or
+  critical findings left, only WalletConnect-tree moderates.)
 
 ## Development
 

@@ -22,7 +22,7 @@ const DECIMAL_AMOUNT = /^(?:\d+(?:\.\d*)?|\.\d+)$/;
 
 /**
  * EIP-55: all-lowercase or all-uppercase hex is unchecked; mixed case must
- * match the checksum exactly (viem 1.x `isAddress` does not check this).
+ * match the checksum exactly (kept explicit; viem 2 `isAddress` also checks it).
  */
 function hasValidChecksum(address: string): boolean {
   const hex = address.slice(2);
