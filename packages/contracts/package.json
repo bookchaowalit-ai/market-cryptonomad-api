@@ -6,9 +6,8 @@
     "build": "hardhat compile",
     "test": "hardhat test",
     "deploy": "hardhat run scripts/deploy.ts",
-    "deploy:testnet": "hardhat run scripts/deploy.ts --network goerli",
+    "deploy:testnet": "hardhat run scripts/deploy.ts --network sepolia",
     "deploy:mainnet": "hardhat run scripts/deploy.ts --network mainnet",
-    "verify": "hardhat run scripts/verify.ts",
     "clean": "hardhat clean",
     "lint": "solhint 'contracts/**/*.sol'",
     "format": "prettier --write 'contracts/**/*.sol'"
@@ -20,7 +19,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^1.1.0",
-    "@openzeppelin/hardhat-upgrades": "^1.28.0",
+    "@openzeppelin/hardhat-upgrades": "^2.5.1",
     "dotenv": "^16.6.1",
     "hardhat": "^2.17.0",
     "prettier-plugin-solidity": "^1.1.0",

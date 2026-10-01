@@ -13,11 +13,11 @@
     "test": "vitest"
   },
   "dependencies": {
-    "viem": "^1.10.0"
+    "viem": "^2.57.1"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "typescript": "^5.1.0",
-    "vitest": "^0.34.0",
-    "@types/node": "^20.0.0"
+    "vitest": "^0.34.0"
   }
 }

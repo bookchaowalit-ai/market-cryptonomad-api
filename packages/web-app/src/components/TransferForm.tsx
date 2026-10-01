@@ -1,23 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import { formatUnits } from 'viem';
 import { useAccount } from 'wagmi';
+import { NOMAD_DECIMALS, validateTransfer, type TransferErrors } from '@/lib/transfer';
 
 export function TransferForm() {
   const { address } = useAccount();
   const [recipient, setRecipient] = useState('');
   const [amount, setAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<TransferErrors>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!recipient || !amount) return;
-
+    const result = validateTransfer({ recipient, amount, sender: address });
+    if (!result.ok) {
+      setErrors(result.errors);
+      return;
+    }
+    setErrors({});
     setIsLoading(true);
-    
+
     // TODO: Implement actual token transfer in later tasks
     setTimeout(() => {
-      alert(`Mock transfer: ${amount} NOMAD to ${recipient}`);
+      alert(`Mock transfer: ${formatUnits(result.value, NOMAD_DECIMALS)} NOMAD to ${result.to}`);
       setRecipient('');
       setAmount('');
       setIsLoading(false);
@@ -27,7 +34,7 @@ export function TransferForm() {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-4">Send NOMAD Tokens</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div>
           <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 mb-1">
             Recipient Address
@@ -38,9 +45,18 @@ export function TransferForm() {
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
             placeholder="0x..."
+            autoComplete="off"
+            spellCheck={false}
+            aria-invalid={errors.recipient ? true : undefined}
+            aria-describedby={errors.recipient ? 'recipient-error' : undefined}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             required
           />
+          {errors.recipient && (
+            <p id="recipient-error" role="alert" className="mt-1 text-sm text-red-700">
+              {errors.recipient}
+            </p>
+          )}
         </div>
         
         <div>
@@ -48,16 +64,22 @@ export function TransferForm() {
             Amount (NOMAD)
           </label>
           <input
-            type="number"
+            type="text"
+            inputMode="decimal"
             id="amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0.00"
-            step="0.0001"
-            min="0"
+            aria-invalid={errors.amount ? true : undefined}
+            aria-describedby={errors.amount ? 'amount-error' : undefined}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             required
           />
+          {errors.amount && (
+            <p id="amount-error" role="alert" className="mt-1 text-sm text-red-700">
+              {errors.amount}
+            </p>
+          )}
         </div>
 
         <button

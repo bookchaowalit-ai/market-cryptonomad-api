@@ -64,7 +64,7 @@ async function main() {
   // Save deployment info
   const deploymentInfo = {
     network: (await ethers.provider.getNetwork()).name,
-    chainId: (await ethers.provider.getNetwork()).chainId,
+    chainId: (await ethers.provider.getNetwork()).chainId.toString(),
     proxyAddress,
     implementationAddress,
     deployer: deployer.address,
@@ -73,7 +73,7 @@ async function main() {
     tokenDetails: {
       name,
       symbol,
-      decimals,
+      decimals: Number(decimals),
       maxSupply: maxSupply.toString(),
       totalSupply: totalSupply.toString(),
     },
