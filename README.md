@@ -47,6 +47,31 @@ code (`packages/contracts/test`, `packages/*/src/**/*.test.ts`).
   RainbowKit 2 and TanStack Query 5; `npm audit --omit=dev` has no high or
   critical findings left, only WalletConnect-tree moderates.)
 
+## Disposition
+
+**Keep as a web3 lab** (recorded 2026-10-15, BOO-253). Not promoted to a
+product, not archived.
+
+| Option | Decision | Why |
+|---|---|---|
+| Keep as lab | **Chosen** | The contract and wallet UI are real and tested, and the repo costs nothing to keep. |
+| Promote | Not now | No token deployment, users, legal review or security audit exist; promoting would mean shipping a token. |
+| Archive | Not now | CI is green and the contract suite is a useful reference for upgradeable ERC-20 patterns. |
+
+Evidence (2026-10-15):
+
+- `packages/contracts/test/NomadCoin.test.ts` has 19 Hardhat tests covering
+  roles, the max-supply cap, pause, blacklist and UUPS upgrade authorization.
+- CI on `main` at `895c2f7` passed (solhint, `hardhat test`, shared and web-app
+  typecheck/lint/vitest):
+  <https://github.com/bookchaowalit-ai/market-cryptonomad-api/actions/runs/38288035800>.
+- The GitHub repository has no deployments and no homepage, and nothing in
+  this repository deploys to a public network automatically.
+
+What the lab label rules out: no mainnet or testnet deployment, token sale or
+"live" claim without a new owner decision. That decision would also need a
+third-party contract audit.
+
 ## Development
 
 ```bash
