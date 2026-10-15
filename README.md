@@ -66,7 +66,8 @@ Evidence (2026-10-15):
   web-app lint/typecheck/vitest):
   <https://github.com/bookchaowalit-ai/market-cryptonomad-api/actions/runs/38288035800>.
 - The GitHub repository has no deployments and no homepage, and nothing in
-  this repository deploys to a public network automatically.
+  this repository deploys to a public network automatically (the
+  `deploy:testnet` and `deploy:mainnet` scripts exist but only run by hand).
 
 What the lab label rules out: no mainnet or testnet deployment, token sale or
 "live" claim without a new owner decision. That decision would also need a
