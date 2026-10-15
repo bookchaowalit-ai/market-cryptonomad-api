@@ -62,8 +62,8 @@ Evidence (2026-10-15):
 
 - `packages/contracts/test/NomadCoin.test.ts` has 19 Hardhat tests covering
   roles, the max-supply cap, pause, blacklist and UUPS upgrade authorization.
-- CI on `main` at `895c2f7` passed (solhint, `hardhat test`, shared and web-app
-  typecheck/lint/vitest):
+- CI on `main` at `895c2f7` passed (solhint, `hardhat test`, shared typecheck/vitest,
+  web-app lint/typecheck/vitest):
   <https://github.com/bookchaowalit-ai/market-cryptonomad-api/actions/runs/38288035800>.
 - The GitHub repository has no deployments and no homepage, and nothing in
   this repository deploys to a public network automatically.
