@@ -1,45 +1,37 @@
+# Shared CI + security baseline. Public repository: GitHub-hosted runners.
+# Same checks as the previous hand-written workflow, run through the shared ci-node workflow
+# at the workspace root (npm ci installs every package).
 name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-node.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
+    with:
+      node-version: "20"
+      lint-command: |
+        (cd packages/contracts && npx solhint --max-warnings 0 'contracts/**/*.sol')
+        (cd packages/web-app && npm run lint)
+      typecheck-command: |
+        (cd packages/shared && npx tsc --noEmit -p .)
+        (cd packages/web-app && npx tsc --noEmit -p .)
+      # Hardhat runs on its in-process network; no RPC, keys or deployments.
+      test-command: |
+        (cd packages/contracts && npx hardhat test)
+        (cd packages/shared && npx vitest run)
+        (cd packages/web-app && npx vitest run)
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-
-      - name: Install workspace dependencies
-        run: npm ci
-
-      - name: Contracts - solhint
-        working-directory: packages/contracts
-        run: npx solhint --max-warnings 0 'contracts/**/*.sol'
-
-      - name: Contracts - compile and test (in-process Hardhat network)
-        working-directory: packages/contracts
-        run: npx hardhat test
-
-      - name: Shared - typecheck and unit tests
-        working-directory: packages/shared
-        run: |
-          npx tsc --noEmit -p .
-          npx vitest run
-
-      - name: Web app - lint, typecheck and unit tests
-        working-directory: packages/web-app
-        run: |
-          npm run lint
-          npx tsc --noEmit -p .
-          npx vitest run
+  security:
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/security.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
